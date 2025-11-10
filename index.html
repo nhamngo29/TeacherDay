@@ -829,7 +829,7 @@
         <div class="hero-content">
             <h1>Chúc Mừng Ngày Nhà Giáo Việt Nam</h1>
             <p class="subtitle">20 tháng 11</p>
-            <p class="subtitle">Con/Em có món quà nhỏ gửi Thầy/Cô...</p>
+            <p class="subtitle">Tụi em niêm khoá 2017 - 2020 (2002) có món quà nhỏ gửi Thầy/Cô...</p>
         </div>
     </section>
 
@@ -844,7 +844,7 @@
                 <div class="letter-signature">
                     <p>Với lòng biết ơn sâu sắc,</p>
                     <p style="margin-top: 1rem;">Từ học trò của Thầy/Cô</p>
-                    <p style="margin-top: 0.5rem; font-size: 1.5rem;">– [Tên của bạn] –</p>
+                    <p style="margin-top: 0.5rem; font-size: 1.5rem;">– Niêm khoá 2017 - 2020 (2002) –</p>
                 </div>
             </div>
         </div>
@@ -932,8 +932,8 @@
     <!-- Footer -->
     <footer class="footer">
         <p>Trân trọng gửi đến Thầy/Cô</p>
-        <p class="signature">Tạo bởi [Tên của bạn] với tất cả lòng biết ơn</p>
-        <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">© 2024 - Món quà nhỏ nhân Ngày Nhà Giáo Việt Nam 20/11</p>
+        <p class="signature">Tạo bởi nhóm em niêm khoá 2017 - 2020 (2002) với tất cả lòng biết ơn</p>
+        <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">© 2024 nhamngo.29 - Món quà nhỏ nhân Ngày Nhà Giáo Việt Nam 20/11</p>
     </footer>
 
     <script>
@@ -1013,7 +1013,6 @@
 
         openBookBtn.addEventListener('click', () => {
             bookCover.classList.add('open');
-            
             // Đảm bảo nhạc phát ngay khi click mở thiệp (đã có tương tác của người dùng)
             if (backgroundMusic) {
                 backgroundMusic.play().then(() => {
@@ -1031,6 +1030,7 @@
                 bookCoverContainer.classList.add('hidden');
                 // Kích hoạt particle animation
                 initParticles();
+                createConfetti();
             }, 2000);
         });
 
@@ -1114,15 +1114,15 @@
         // ==================== TYPING EFFECT ====================
         const letterText = `Kính gửi Thầy/Cô,
 
-Nhân dịp Ngày Nhà Giáo Việt Nam 20/11, con/em xin gửi đến Thầy/Cô những lời chúc tốt đẹp nhất, những lời tri ân sâu sắc nhất từ tận đáy lòng.
+Nhân dịp Ngày Nhà Giáo Việt Nam 20/11, tụi em xin gửi đến Thầy/Cô những lời chúc tốt đẹp nhất, những lời tri ân sâu sắc nhất từ tận đáy lòng.
 
-Thầy/Cô đã dành cho chúng con/em không chỉ là những bài giảng hay, mà còn là tình yêu thương, sự quan tâm, và những bài học quý giá về cuộc sống. Mỗi lời giảng, mỗi cử chỉ của Thầy/Cô đều in sâu trong tâm trí con/em, trở thành hành trang theo con/em suốt cuộc đời.
+Thầy/Cô đã dành cho tụi em không chỉ là những bài giảng hay, mà còn là tình yêu thương, sự quan tâm, và những bài học quý giá về cuộc sống. Mỗi lời giảng, mỗi cử chỉ của Thầy/Cô đều in sâu trong tâm trí tụi em, trở thành hành trang theo tụi em suốt cuộc đời.
 
-Những ngày tháng được học tập dưới sự dìu dắt của Thầy/Cô là những khoảnh khắc đáng quý nhất. Thầy/Cô không chỉ là người truyền đạt kiến thức, mà còn là người thắp sáng ước mơ, khơi gợi đam mê và định hướng tương lai cho chúng con/em.
+Những ngày tháng được học tập dưới sự dìu dắt của Thầy/Cô là những khoảnh khắc đáng quý nhất. Thầy/Cô không chỉ là người truyền đạt kiến thức, mà còn là người thắp sáng ước mơ, khơi gợi đam mê và định hướng tương lai cho tụi em.
 
-Con/em biết rằng, công việc giảng dạy không phải là điều dễ dàng. Nó đòi hỏi sự kiên nhẫn, tâm huyết và tình yêu thương vô bờ bến. Thầy/Cô đã dành cả cuộc đời để chăm sóc, nuôi dưỡng những thế hệ học trò, để chúng con/em có thể vững bước trên con đường tri thức.
+Tụi em biết rằng, công việc giảng dạy không phải là điều dễ dàng. Nó đòi hỏi sự kiên nhẫn, tâm huyết và tình yêu thương vô bờ bến. Thầy/Cô đã dành cả cuộc đời để chăm sóc, nuôi dưỡng những thế hệ học trò, để tụi em có thể vững bước trên con đường tri thức.
 
-Hôm nay, con/em muốn nói lời cảm ơn chân thành nhất đến Thầy/Cô. Cảm ơn Thầy/Cô đã luôn kiên nhẫn, cảm ơn Thầy/Cô đã luôn tin tưởng, và cảm ơn Thầy/Cô đã luôn yêu thương chúng con/em như những đứa con của mình.
+Hôm nay, tụi em muốn nói lời cảm ơn chân thành nhất đến Thầy/Cô. Cảm ơn Thầy/Cô đã luôn kiên nhẫn, cảm ơn Thầy/Cô đã luôn tin tưởng, và cảm ơn Thầy/Cô đã luôn yêu thương t
 
 Con/em mong rằng Thầy/Cô sẽ luôn khỏe mạnh, hạnh phúc và tiếp tục truyền cảm hứng cho nhiều thế hệ học trò khác. Những công lao của Thầy/Cô sẽ mãi mãi được ghi nhớ và trân trọng.
 
