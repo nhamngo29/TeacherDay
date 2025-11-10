@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Món quà nhỏ gửi Thầy/Cô 20/11</title>
+    <title>Thiệp 20/11 - Gửi Thầy/Cô kính mến</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -17,6 +17,8 @@
             --color-white: #FFFFFF;
             --color-dark: #4A4A4A;
             --color-light: #F8F8F8;
+            --color-gold: #FFD700;
+            --color-coral: #FF7F50;
         }
 
         * {
@@ -29,104 +31,231 @@
             font-family: 'Poppins', sans-serif;
             color: var(--color-dark);
             overflow-x: hidden;
-            background: linear-gradient(135deg, #FFE4E1 0%, #F0E6FF 50%, #E6F3FF 100%);
-            background-attachment: fixed;
+            background: #f5f5f5;
         }
 
-        /* Splash Screen */
-        .splash-screen {
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ==================== BOOK COVER (PRELOADER) ==================== */
+        .book-cover-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--color-pink) 0%, var(--color-purple) 50%, var(--color-blue) 100%);
+            z-index: 10000;
+            perspective: 2000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .book-cover-container.hidden {
+            display: none;
+        }
+
+        .book-cover {
+            width: 600px;
+            height: 800px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .book-cover.open {
+            transform: rotateY(-180deg);
+        }
+
+        .book-front,
+        .book-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 10000;
-            transition: opacity 1s ease-out, visibility 1s;
-        }
-
-        .splash-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .splash-content {
+            padding: 60px;
             text-align: center;
-            color: white;
         }
 
-        .splash-content h1 {
+        .book-front {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            z-index: 2;
+        }
+
+        .book-back {
+            background: #f5f5f5;
+            transform: rotateY(180deg);
+        }
+
+        .book-front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grain" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.15"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            border-radius: 10px;
+            opacity: 0.3;
+        }
+
+        .book-title {
             font-family: 'Dancing Script', cursive;
             font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease-out;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .splash-content p {
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .book-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .open-book-btn {
+            padding: 18px 50px;
             font-size: 1.2rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        .start-btn {
-            padding: 15px 40px;
-            font-size: 1.1rem;
             background: white;
-            color: var(--color-purple);
+            color: #f5576c;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeInUp 1s ease-out 0.6s both;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
         }
 
-        .start-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        .open-book-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
         }
 
-        /* Floating Background Elements */
-        .floating-elements {
-            position: fixed;
+        .book-spine {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0.2), transparent);
+            border-radius: 10px 0 0 10px;
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-canvas {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             z-index: 1;
         }
 
-        .floating-icon {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.3;
-            animation: float 6s ease-in-out infinite;
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 0.5s forwards;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
+        .hero h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            background: linear-gradient(135deg, var(--color-pink), var(--color-purple), var(--color-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: none;
+            animation: gradientShift 5s ease infinite;
         }
 
-        /* Music Control */
+        @keyframes gradientShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(20deg); }
+        }
+
+        .hero .subtitle {
+            font-size: 1.8rem;
+            color: var(--color-dark);
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1s forwards;
+        }
+
+        .hero .subtitle:nth-child(3) {
+            animation-delay: 1.3s;
+        }
+
+        .hero .subtitle:nth-child(4) {
+            animation-delay: 1.6s;
+            font-size: 1.4rem;
+            color: var(--color-purple);
+            margin-top: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== MUSIC CONTROL ==================== */
         .music-control {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 50px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            gap: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 2.5s forwards;
         }
 
         .music-btn {
@@ -138,68 +267,23 @@
         }
 
         .music-btn:hover {
-            transform: scale(1.2);
+            transform: scale(1.2) rotate(10deg);
         }
 
         .music-label {
             font-size: 0.9rem;
             color: var(--color-dark);
+            font-weight: 500;
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
-            z-index: 2;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .hero-content {
-            animation: fadeIn 1.5s ease-out;
-            max-width: 800px;
-        }
-
-        .hero h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 4rem;
-            color: var(--color-purple);
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .hero .subtitle {
-            font-size: 1.5rem;
-            color: var(--color-dark);
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .open-card-btn {
-            padding: 18px 50px;
-            font-size: 1.2rem;
-            background: linear-gradient(135deg, var(--color-pink), var(--color-purple));
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        }
-
-        .open-card-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        /* Letter Section */
+        /* ==================== LETTER SECTION ==================== */
         .letter-section {
-            padding: 80px 2rem;
+            padding: 100px 2rem;
             max-width: 900px;
             margin: 0 auto;
             position: relative;
@@ -207,12 +291,19 @@
         }
 
         .letter-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 60px 50px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            background: #fffef7;
+            border-radius: 15px;
+            padding: 80px 60px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
             position: relative;
-            backdrop-filter: blur(10px);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 1s ease-out;
+        }
+
+        .letter-container.visible {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         .letter-container::before {
@@ -222,9 +313,25 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="paper" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="0.5" fill="%23f0f0f0" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23paper)"/></svg>');
-            border-radius: 20px;
-            opacity: 0.3;
+            background-image: 
+                repeating-linear-gradient(
+                    transparent,
+                    transparent 31px,
+                    rgba(0,0,0,0.03) 31px,
+                    rgba(0,0,0,0.03) 32px
+                );
+            border-radius: 15px;
+            pointer-events: none;
+        }
+
+        .letter-container::after {
+            content: '';
+            position: absolute;
+            left: 80px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,0,0,0.1);
             pointer-events: none;
         }
 
@@ -234,33 +341,53 @@
         }
 
         .letter-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem;
             color: var(--color-purple);
             margin-bottom: 2rem;
             text-align: center;
+            font-weight: 700;
         }
 
         .letter-text {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             line-height: 2;
-            color: var(--color-dark);
+            color: #333;
             margin-bottom: 1.5rem;
             text-align: justify;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .letter-text p {
+            margin-bottom: 1rem;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: var(--color-purple);
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
         .letter-signature {
             text-align: right;
-            margin-top: 3rem;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
+            margin-top: 4rem;
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
             color: var(--color-purple);
         }
 
-        /* Timeline Section */
+        /* ==================== TIMELINE SECTION ==================== */
         .timeline-section {
-            padding: 80px 2rem;
-            max-width: 1000px;
+            padding: 100px 2rem;
+            max-width: 1100px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
@@ -268,10 +395,21 @@
 
         .section-title {
             font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
+            font-size: 4rem;
             text-align: center;
-            color: var(--color-purple);
-            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--color-pink), var(--color-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .timeline {
@@ -279,36 +417,54 @@
             padding: 2rem 0;
         }
 
-        .timeline::before {
-            content: '';
+        .timeline-line {
             position: absolute;
             left: 50%;
             top: 0;
             bottom: 0;
-            width: 3px;
+            width: 4px;
             background: linear-gradient(to bottom, var(--color-pink), var(--color-purple), var(--color-blue));
             transform: translateX(-50%);
+            transform-origin: top;
+            scale: 0 1;
+            transition: scale 1.5s ease-out;
+        }
+
+        .timeline-line.animate {
+            scale: 1 1;
         }
 
         .timeline-item {
             display: flex;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             position: relative;
-            animation: fadeInLeft 1s ease-out;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .timeline-item:nth-child(even) {
             flex-direction: row-reverse;
-            animation: fadeInRight 1s ease-out;
         }
 
         .timeline-content {
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
             width: 45%;
             position: relative;
+            transition: transform 0.3s;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
         }
 
         .timeline-item:nth-child(odd) .timeline-content {
@@ -323,210 +479,267 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(135deg, var(--color-pink), var(--color-purple));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-size: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
             z-index: 3;
+            border: 5px solid white;
+            transition: all 0.3s;
+        }
+
+        .timeline-icon:hover {
+            transform: translateX(-50%) scale(1.2) rotate(10deg);
         }
 
         .timeline-item h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--color-purple);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
         .timeline-item p {
             color: var(--color-dark);
-            line-height: 1.6;
+            line-height: 1.8;
+            font-size: 1.05rem;
         }
 
-        /* Gallery Section */
+        /* ==================== GALLERY SECTION (POLAROID) ==================== */
         .gallery-section {
-            padding: 80px 2rem;
-            max-width: 1200px;
+            padding: 100px 2rem;
+            max-width: 1400px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            background: #fafafa;
+        }
+
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 20px 20px 60px 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.8) rotate(0deg);
+        }
+
+        .polaroid.visible {
+            opacity: 1;
+            animation: polaroidPopIn 0.6s ease-out forwards;
+        }
+
+        @keyframes polaroidPopIn {
+            to {
+                transform: scale(1) rotate(var(--rotation));
+            }
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.15) !important;
+            z-index: 100;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        .polaroid img {
+            width: 280px;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            background: #eee;
+        }
+
+        .polaroid-caption {
+            margin-top: 15px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            color: #333;
+            text-align: center;
+        }
+
+        /* ==================== CTA BUTTON & CONFETTI ==================== */
+        .cta-section {
+            padding: 80px 2rem;
+            text-align: center;
             position: relative;
             z-index: 2;
         }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
+        .cta-button {
+            padding: 25px 60px;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--color-pink), var(--color-purple));
+            color: white;
+            border: none;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 600;
+            font-family: 'Dancing Script', cursive;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .gallery-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
-        .gallery-item img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            display: block;
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
-        /* Modal */
-        .modal {
-            display: none;
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Confetti */
+        .confetti-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 10px;
+            pointer-events: none;
+            z-index: 9999;
             overflow: hidden;
         }
 
-        .modal-content img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            z-index: 10001;
-        }
-
-        /* Footer */
-        .footer {
-            padding: 40px 2rem;
-            text-align: center;
-            color: var(--color-dark);
-            position: relative;
-            z-index: 2;
-        }
-
-        .footer p {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer .signature {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
-            color: var(--color-purple);
-            margin-top: 1rem;
-        }
-
-        /* Confetti */
         .confetti {
-            position: fixed;
+            position: absolute;
             width: 10px;
             height: 10px;
             background: var(--color-pink);
-            position: absolute;
-            animation: confettiFall linear;
-            z-index: 1000;
+            top: -10px;
+            animation: confettiFall linear forwards;
         }
 
         @keyframes confettiFall {
             to {
-                transform: translateY(100vh) rotate(360deg);
+                transform: translateY(100vh) rotate(720deg) translateX(var(--drift));
                 opacity: 0;
             }
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* ==================== FOOTER ==================== */
+        .footer {
+            padding: 60px 2rem;
+            text-align: center;
+            color: var(--color-dark);
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(135deg, rgba(255,182,193,0.1), rgba(221,160,221,0.1));
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .footer p {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
         }
 
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .footer .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--color-pink), var(--color-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 1.5rem;
+            font-weight: 700;
         }
 
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        /* ==================== PARALLAX EFFECT ==================== */
+        .parallax-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        /* Responsive */
+        .parallax-layer-1 {
+            background: radial-gradient(circle at 20% 50%, rgba(255,182,193,0.3), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(221,160,221,0.3), transparent 50%);
+            transform: translateZ(0);
+        }
+
+        .parallax-layer-2 {
+            background: radial-gradient(circle at 60% 30%, rgba(176,224,230,0.2), transparent 50%);
+            transform: translateZ(0);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
         @media (max-width: 768px) {
-            .hero h1 {
+            .book-cover {
+                width: 90%;
+                height: 600px;
+            }
+
+            .book-title {
                 font-size: 2.5rem;
             }
 
+            .hero h1 {
+                font-size: 3rem;
+            }
+
             .hero .subtitle {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
 
             .letter-container {
-                padding: 40px 30px;
+                padding: 50px 30px;
             }
 
             .letter-title {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
-            .timeline::before {
+            .letter-text {
+                font-size: 1rem;
+            }
+
+            .timeline-line {
                 left: 30px;
             }
 
             .timeline-item {
                 flex-direction: row !important;
-                padding-left: 70px;
+                padding-left: 80px;
             }
 
             .timeline-content {
@@ -536,136 +749,136 @@
 
             .timeline-icon {
                 left: 30px;
-                transform: translateX(-50%);
+            }
+
+            .polaroid {
+                transform: scale(0.9) rotate(0deg) !important;
+            }
+
+            .polaroid:hover {
+                transform: scale(1) rotate(0deg) !important;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
             }
 
             .music-control {
                 top: 10px;
                 right: 10px;
-                padding: 8px 15px;
+                padding: 10px 20px;
             }
 
             .music-label {
                 display: none;
             }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         @media (max-width: 480px) {
             .hero h1 {
-                font-size: 2rem;
-            }
-
-            .splash-content h1 {
                 font-size: 2.5rem;
             }
 
+            .book-title {
+                font-size: 2rem;
+            }
+
             .letter-container {
-                padding: 30px 20px;
+                padding: 40px 20px;
             }
 
-            .letter-text {
-                font-size: 1rem;
+            .polaroid img {
+                width: 220px;
+                height: 220px;
             }
-        }
-
-        /* Smooth Scroll */
-        html {
-            scroll-behavior: smooth;
         }
     </style>
 </head>
 <body>
-    <!-- Splash Screen -->
-    <div class="splash-screen" id="splashScreen">
-        <div class="splash-content">
-            <h1>💐 Chúc Mừng 20/11 💐</h1>
-            <p>Món quà nhỏ gửi Thầy/Cô kính mến</p>
-            <button class="start-btn" id="startBtn">Bắt đầu trải nghiệm</button>
+    <!-- Parallax Background Layers -->
+    <div class="parallax-layer parallax-layer-1"></div>
+    <div class="parallax-layer parallax-layer-2"></div>
+
+    <!-- Book Cover (Preloader) -->
+    <div class="book-cover-container" id="bookCoverContainer">
+        <div class="book-cover" id="bookCover">
+            <div class="book-spine"></div>
+            <div class="book-front">
+                <h1 class="book-title">💐 Gửi Thầy/Cô kính mến 💐</h1>
+                <p class="book-subtitle">Nhân ngày Nhà Giáo Việt Nam 20/11</p>
+                <button class="open-book-btn" id="openBookBtn">Mở Thiệp</button>
+            </div>
+            <div class="book-back"></div>
         </div>
     </div>
 
-    <!-- Floating Background Elements -->
-    <div class="floating-elements" id="floatingElements"></div>
-
     <!-- Music Control -->
     <div class="music-control">
-        <button class="music-btn" id="musicBtn">▶️</button>
+        <button class="music-btn" id="musicBtn">🎵</button>
         <span class="music-label">Nhạc nền</span>
-        <audio id="backgroundMusic" loop>
-            <!-- Thay thế bằng đường dẫn nhạc thực tế -->
-            <source src="" type="audio/mpeg">
-            <!-- Fallback: Sử dụng nhạc từ URL công khai hoặc tạo silent audio -->
+        <audio id="backgroundMusic" loop preload="auto">
+            <source src="lofi-lofi-music-podcast-interview-432221.mp3" type="audio/mpeg">
+            <!-- Fallback cho trình duyệt không hỗ trợ -->
+            Trình duyệt của bạn không hỗ trợ phát nhạc.
         </audio>
     </div>
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
+        <canvas class="hero-canvas" id="particleCanvas"></canvas>
         <div class="hero-content">
             <h1>Chúc Mừng Ngày Nhà Giáo Việt Nam</h1>
             <p class="subtitle">20 tháng 11</p>
-            <p class="subtitle" style="font-size: 1.2rem; margin-top: 1rem;">Con/Em có món quà nhỏ gửi Thầy/Cô...</p>
-            <button class="open-card-btn" id="openCardBtn">Mở Thiệp 💌</button>
+            <p class="subtitle">Con/Em có món quà nhỏ gửi Thầy/Cô...</p>
         </div>
     </section>
 
     <!-- Letter Section -->
     <section class="letter-section" id="letterSection">
-        <div class="letter-container">
+        <div class="letter-container" id="letterContainer">
             <div class="letter-content">
                 <h2 class="letter-title">Gửi Thầy/Cô kính mến!</h2>
-                <div class="letter-text">
-                    <p>Kính gửi Thầy/Cô,</p>
-                    <p>Nhân dịp Ngày Nhà Giáo Việt Nam 20/11, con/em xin gửi đến Thầy/Cô những lời chúc tốt đẹp nhất, những lời tri ân sâu sắc nhất từ tận đáy lòng.</p>
-                    <p>Thầy/Cô đã dành cho chúng con/em không chỉ là những bài giảng hay, mà còn là tình yêu thương, sự quan tâm, và những bài học quý giá về cuộc sống. Mỗi lời giảng, mỗi cử chỉ của Thầy/Cô đều in sâu trong tâm trí con/em, trở thành hành trang theo con/em suốt cuộc đời.</p>
-                    <p>Những ngày tháng được học tập dưới sự dìu dắt của Thầy/Cô là những khoảnh khắc đáng quý nhất. Thầy/Cô không chỉ là người truyền đạt kiến thức, mà còn là người thắp sáng ước mơ, khơi gợi đam mê và định hướng tương lai cho chúng con/em.</p>
-                    <p>Con/em biết rằng, công việc giảng dạy không phải là điều dễ dàng. Nó đòi hỏi sự kiên nhẫn, tâm huyết và tình yêu thương vô bờ bến. Thầy/Cô đã dành cả cuộc đời để chăm sóc, nuôi dưỡng những thế hệ học trò, để chúng con/em có thể vững bước trên con đường tri thức.</p>
-                    <p>Hôm nay, con/em muốn nói lời cảm ơn chân thành nhất đến Thầy/Cô. Cảm ơn Thầy/Cô đã luôn kiên nhẫn, cảm ơn Thầy/Cô đã luôn tin tưởng, và cảm ơn Thầy/Cô đã luôn yêu thương chúng con/em như những đứa con của mình.</p>
-                    <p>Con/em mong rằng Thầy/Cô sẽ luôn khỏe mạnh, hạnh phúc và tiếp tục truyền cảm hứng cho nhiều thế hệ học trò khác. Những công lao của Thầy/Cô sẽ mãi mãi được ghi nhớ và trân trọng.</p>
-                    <p>Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui và hạnh phúc!</p>
+                <div class="letter-text" id="letterText">
+                    <p id="typingText"></p>
                 </div>
                 <div class="letter-signature">
                     <p>Với lòng biết ơn sâu sắc,</p>
                     <p style="margin-top: 1rem;">Từ học trò của Thầy/Cô</p>
-                    <p style="margin-top: 0.5rem; font-size: 1.2rem;">– [Tên của bạn] –</p>
+                    <p style="margin-top: 0.5rem; font-size: 1.5rem;">– [Tên của bạn] –</p>
                 </div>
             </div>
         </div>
     </section>
+    <!-- Typing Sound (only for letter typing) -->
+    <audio id="typingAudio" src="keyboard-typing-sound-effect-335503.mp3" preload="auto" loop></audio>
 
     <!-- Timeline Section -->
-    <section class="timeline-section">
-        <h2 class="section-title">Những Kỷ Niệm Đáng Nhớ</h2>
+    <section class="timeline-section" id="timelineSection">
+        <h2 class="section-title" id="timelineTitle">Những Kỷ Niệm Đáng Nhớ</h2>
         <div class="timeline">
-            <div class="timeline-item">
+            <div class="timeline-line" id="timelineLine"></div>
+            <div class="timeline-item" id="timelineItem1">
                 <div class="timeline-icon">🎓</div>
                 <div class="timeline-content">
                     <h3>Ngày Đầu Bỡ Ngỡ</h3>
                     <p>Nhớ lại ngày đầu tiên bước vào lớp, được Thầy/Cô đón chào với nụ cười ấm áp. Những lo lắng, bỡ ngỡ ban đầu đã tan biến nhờ sự quan tâm của Thầy/Cô.</p>
                 </div>
             </div>
-            <div class="timeline-item">
+            <div class="timeline-item" id="timelineItem2">
                 <div class="timeline-icon">📚</div>
                 <div class="timeline-content">
                     <h3>Những Bài Giảng Tâm Đắc</h3>
                     <p>Mỗi bài giảng của Thầy/Cô không chỉ là kiến thức mà còn là những câu chuyện, những bài học cuộc sống quý giá. Những giờ học ấy luôn đầy ắp tiếng cười và sự say mê.</p>
                 </div>
             </div>
-            <div class="timeline-item">
+            <div class="timeline-item" id="timelineItem3">
                 <div class="timeline-icon">🌸</div>
                 <div class="timeline-content">
                     <h3>Những Khoảnh Khắc Vui Vẻ</h3>
                     <p>Những lúc cả lớp cùng nhau thảo luận, những buổi ngoại khóa đầy ý nghĩa, hay những lần Thầy/Cô chia sẻ câu chuyện cá nhân. Tất cả đều là những kỷ niệm đẹp không thể quên.</p>
                 </div>
             </div>
-            <div class="timeline-item">
+            <div class="timeline-item" id="timelineItem4">
                 <div class="timeline-icon">💝</div>
                 <div class="timeline-content">
                     <h3>Tình Cảm Thầy Trò</h3>
@@ -675,188 +888,404 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section class="gallery-section">
-        <h2 class="section-title">Những Khoảnh Khắc Đáng Nhớ</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item" data-image="1">
-                <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Kỷ+niệm+lớp+1" alt="Kỷ niệm">
+    <!-- Gallery Section (Polaroid) -->
+    <section class="gallery-section" id="gallerySection">
+        <h2 class="section-title" id="galleryTitle">Những Khoảnh Khắc Đáng Nhớ</h2>
+        <div class="gallery-container" id="galleryContainer">
+            <div class="polaroid" data-rotation="-5">
+                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=400&fit=crop" alt="Kỷ niệm 1" loading="lazy">
+                <div class="polaroid-caption">Ngày đầu tiên</div>
             </div>
-            <div class="gallery-item" data-image="2">
-                <img src="https://via.placeholder.com/300x200/DDA0DD/FFFFFF?text=Kỷ+niệm+lớp+2" alt="Kỷ niệm">
+            <div class="polaroid" data-rotation="8">
+                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=400&fit=crop" alt="Kỷ niệm 2" loading="lazy">
+                <div class="polaroid-caption">Giờ học đầy cảm hứng</div>
             </div>
-            <div class="gallery-item" data-image="3">
-                <img src="https://via.placeholder.com/300x200/FFE4B5/FFFFFF?text=Kỷ+niệm+lớp+3" alt="Kỷ niệm">
+            <div class="polaroid" data-rotation="-7">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=400&fit=crop" alt="Kỷ niệm 3" loading="lazy">
+                <div class="polaroid-caption">Buổi ngoại khóa</div>
             </div>
-            <div class="gallery-item" data-image="4">
-                <img src="https://via.placeholder.com/300x200/B0E0E6/FFFFFF?text=Kỷ+niệm+lớp+4" alt="Kỷ niệm">
+            <div class="polaroid" data-rotation="6">
+                <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&h=400&fit=crop" alt="Kỷ niệm 4" loading="lazy">
+                <div class="polaroid-caption">Những cuốn sách yêu thương</div>
+            </div>
+            <div class="polaroid" data-rotation="-4">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=400&fit=crop" alt="Kỷ niệm 5" loading="lazy">
+                <div class="polaroid-caption">Khoảnh khắc vui vẻ</div>
+            </div>
+            <div class="polaroid" data-rotation="9">
+                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=400&fit=crop" alt="Kỷ niệm 6" loading="lazy">
+                <div class="polaroid-caption">Tình cảm thầy trò</div>
             </div>
         </div>
     </section>
 
-    <!-- Modal -->
-    <div class="modal" id="imageModal">
-        <span class="modal-close" id="modalClose">&times;</span>
-        <div class="modal-content">
-            <img id="modalImage" src="" alt="Kỷ niệm">
-        </div>
-    </div>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <button class="cta-button" id="ctaButton">
+            <span>🎉 Tri Ân Thầy Cô! 🎉</span>
+        </button>
+    </section>
+
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
 
     <!-- Footer -->
     <footer class="footer">
         <p>Trân trọng gửi đến Thầy/Cô</p>
         <p class="signature">Tạo bởi [Tên của bạn] với tất cả lòng biết ơn</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">© 2024 - Món quà nhỏ nhân Ngày Nhà Giáo Việt Nam 20/11</p>
+        <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">© 2024 - Món quà nhỏ nhân Ngày Nhà Giáo Việt Nam 20/11</p>
     </footer>
 
     <script>
-        // Splash Screen
-        const splashScreen = document.getElementById('splashScreen');
-        const startBtn = document.getElementById('startBtn');
+        // ==================== BOOK COVER LOGIC ====================
+        const bookCoverContainer = document.getElementById('bookCoverContainer');
+        const bookCover = document.getElementById('bookCover');
+        const openBookBtn = document.getElementById('openBookBtn');
         const backgroundMusic = document.getElementById('backgroundMusic');
         const musicBtn = document.getElementById('musicBtn');
-        const openCardBtn = document.getElementById('openCardBtn');
-        const letterSection = document.getElementById('letterSection');
-        const floatingElements = document.getElementById('floatingElements');
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        const imageModal = document.getElementById('imageModal');
-        const modalImage = document.getElementById('modalImage');
-        const modalClose = document.getElementById('modalClose');
+        
+        // Khai báo biến trạng thái nhạc
+        let isPlaying = false;
 
-        // Tạo floating icons
-        const icons = ['🌸', '💐', '🌺', '🌻', '🌷', '🌹', '⭐', '✨'];
-        for (let i = 0; i < 15; i++) {
-            const icon = document.createElement('div');
-            icon.className = 'floating-icon';
-            icon.textContent = icons[Math.floor(Math.random() * icons.length)];
-            icon.style.left = Math.random() * 100 + '%';
-            icon.style.top = Math.random() * 100 + '%';
-            icon.style.animationDelay = Math.random() * 6 + 's';
-            icon.style.animationDuration = (Math.random() * 4 + 4) + 's';
-            floatingElements.appendChild(icon);
+        // Hàm thử phát nhạc tự động
+        function tryAutoPlayMusic() {
+            if (backgroundMusic && backgroundMusic.readyState >= 2) {
+                backgroundMusic.play()
+                    .then(() => {
+                        musicBtn.textContent = '🎵';
+                        isPlaying = true;
+                        console.log('Nhạc nền đã tự động phát');
+                    })
+                    .catch(e => {
+                        console.log('Autoplay bị chặn, sẽ phát khi người dùng tương tác:', e);
+                        musicBtn.textContent = '🔇';
+                        isPlaying = false;
+                    });
+            } else {
+                // Nếu audio chưa sẵn sàng, chờ một chút rồi thử lại
+                setTimeout(tryAutoPlayMusic, 100);
+            }
         }
 
-        // Start Button - Bắt đầu trải nghiệm
-        startBtn.addEventListener('click', () => {
-            splashScreen.classList.add('hidden');
-            // Bật nhạc
-            setTimeout(() => {
-                try {
-                    backgroundMusic.play().catch(e => {
-                        console.log('Autoplay bị chặn. Người dùng cần tương tác để phát nhạc.');
-                    });
-                } catch (e) {
-                    console.log('Lỗi phát nhạc:', e);
+        // Thiết lập volume nhạc nền (30% để không quá to)
+        if (backgroundMusic) {
+            backgroundMusic.volume = 0.3;
+            // Thử phát khi audio đã sẵn sàng
+            backgroundMusic.addEventListener('canplay', () => {
+                if (!isPlaying) {
+                    tryAutoPlayMusic();
                 }
-            }, 500);
+            });
+        }
+
+        // Thử autoplay khi trang đã load
+        window.addEventListener('load', () => {
+            if (backgroundMusic) {
+                backgroundMusic.volume = 0.3;
+                // Thử phát nhạc tự động
+                tryAutoPlayMusic();
+            }
         });
 
-        // Music Control
-        let isPlaying = false;
-        musicBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                backgroundMusic.pause();
-                musicBtn.textContent = '▶️';
-                isPlaying = false;
-            } else {
+        // Cũng thử khi DOM ready (nhanh hơn)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                if (backgroundMusic) {
+                    backgroundMusic.volume = 0.3;
+                }
+            });
+        } else {
+            if (backgroundMusic) {
+                backgroundMusic.volume = 0.3;
+            }
+        }
+
+        // Thử phát nhạc khi có bất kỳ tương tác nào của người dùng (một lần duy nhất)
+        function onUserInteraction() {
+            if (backgroundMusic && !isPlaying) {
+                tryAutoPlayMusic();
+            }
+        }
+        // Lắng nghe các sự kiện tương tác để phát nhạc (nếu autoplay bị chặn)
+        document.addEventListener('click', onUserInteraction, { once: true });
+        document.addEventListener('touchstart', onUserInteraction, { once: true });
+        document.addEventListener('keydown', onUserInteraction, { once: true });
+
+        openBookBtn.addEventListener('click', () => {
+            bookCover.classList.add('open');
+            
+            // Đảm bảo nhạc phát ngay khi click mở thiệp (đã có tương tác của người dùng)
+            if (backgroundMusic) {
                 backgroundMusic.play().then(() => {
-                    musicBtn.textContent = '⏸️';
+                    musicBtn.textContent = '🎵';
                     isPlaying = true;
                 }).catch(e => {
                     console.log('Lỗi phát nhạc:', e);
-                    alert('Vui lòng tương tác với trang để phát nhạc.');
+                    musicBtn.textContent = '🔇';
+                    isPlaying = false;
+                });
+            }
+
+            // Ẩn book cover sau khi animation hoàn tất
+            setTimeout(() => {
+                bookCoverContainer.classList.add('hidden');
+                // Kích hoạt particle animation
+                initParticles();
+            }, 2000);
+        });
+
+        // ==================== MUSIC CONTROL ====================
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                backgroundMusic.pause();
+                musicBtn.textContent = '🔇';
+                isPlaying = false;
+            } else {
+                backgroundMusic.play().then(() => {
+                    musicBtn.textContent = '🎵';
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log('Lỗi phát nhạc:', e);
                 });
             }
         });
 
-        // Open Card Button - Scroll mượt và tạo confetti
-        openCardBtn.addEventListener('click', () => {
-            letterSection.scrollIntoView({ behavior: 'smooth' });
-            createConfetti();
-        });
+        // ==================== PARTICLE ANIMATION ====================
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
-        // Tạo hiệu ứng confetti
-        function createConfetti() {
-            const colors = ['#FFB6C1', '#DDA0DD', '#FFE4B5', '#B0E0E6', '#FFD700'];
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.top = '-10px';
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
-                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
-                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                    document.body.appendChild(confetti);
-                    
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 5000);
-                }, i * 20);
+            const particles = [];
+            const particleCount = 50;
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 3 + 1;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                    this.color = `hsl(${Math.random() * 60 + 300}, 70%, 70%)`;
+                    this.opacity = Math.random() * 0.5 + 0.2;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    if (this.x > canvas.width) this.x = 0;
+                    if (this.x < 0) this.x = canvas.width;
+                    if (this.y > canvas.height) this.y = 0;
+                    if (this.y < 0) this.y = canvas.height;
+                }
+
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = this.opacity;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+
+        // ==================== TYPING EFFECT ====================
+        const letterText = `Kính gửi Thầy/Cô,
+
+Nhân dịp Ngày Nhà Giáo Việt Nam 20/11, con/em xin gửi đến Thầy/Cô những lời chúc tốt đẹp nhất, những lời tri ân sâu sắc nhất từ tận đáy lòng.
+
+Thầy/Cô đã dành cho chúng con/em không chỉ là những bài giảng hay, mà còn là tình yêu thương, sự quan tâm, và những bài học quý giá về cuộc sống. Mỗi lời giảng, mỗi cử chỉ của Thầy/Cô đều in sâu trong tâm trí con/em, trở thành hành trang theo con/em suốt cuộc đời.
+
+Những ngày tháng được học tập dưới sự dìu dắt của Thầy/Cô là những khoảnh khắc đáng quý nhất. Thầy/Cô không chỉ là người truyền đạt kiến thức, mà còn là người thắp sáng ước mơ, khơi gợi đam mê và định hướng tương lai cho chúng con/em.
+
+Con/em biết rằng, công việc giảng dạy không phải là điều dễ dàng. Nó đòi hỏi sự kiên nhẫn, tâm huyết và tình yêu thương vô bờ bến. Thầy/Cô đã dành cả cuộc đời để chăm sóc, nuôi dưỡng những thế hệ học trò, để chúng con/em có thể vững bước trên con đường tri thức.
+
+Hôm nay, con/em muốn nói lời cảm ơn chân thành nhất đến Thầy/Cô. Cảm ơn Thầy/Cô đã luôn kiên nhẫn, cảm ơn Thầy/Cô đã luôn tin tưởng, và cảm ơn Thầy/Cô đã luôn yêu thương chúng con/em như những đứa con của mình.
+
+Con/em mong rằng Thầy/Cô sẽ luôn khỏe mạnh, hạnh phúc và tiếp tục truyền cảm hứng cho nhiều thế hệ học trò khác. Những công lao của Thầy/Cô sẽ mãi mãi được ghi nhớ và trân trọng.
+
+Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui và hạnh phúc!`;
+
+        let typingIndex = 0;
+        let typingStarted = false;
+        let typingFinished = false;
+        const typingAudio = document.getElementById('typingAudio');
+        if (typingAudio) {
+            typingAudio.volume = 0.18; // âm lượng nhẹ nhàng
+        }
+
+        function typeText() {
+            if (typingIndex < letterText.length) {
+                const typingElement = document.getElementById('typingText');
+                typingElement.textContent = letterText.substring(0, typingIndex + 1);
+                typingIndex++;
+                setTimeout(typeText, 30);
+            } else {
+                // Xóa cursor sau khi hoàn thành
+                const cursor = document.querySelector('.typing-cursor');
+                if (cursor) cursor.remove();
+                typingFinished = true;
+                // Dừng âm typing khi hoàn thành
+                if (typingAudio && !typingAudio.paused) {
+                    typingAudio.pause();
+                    typingAudio.currentTime = 0;
+                }
             }
         }
 
-        // Gallery Modal
-        galleryItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const imgSrc = item.querySelector('img').src;
-                modalImage.src = imgSrc;
-                imageModal.classList.add('active');
-            });
-        });
-
-        modalClose.addEventListener('click', () => {
-            imageModal.classList.remove('active');
-        });
-
-        imageModal.addEventListener('click', (e) => {
-            if (e.target === imageModal) {
-                imageModal.classList.remove('active');
-            }
-        });
-
-        // Keyboard navigation for modal
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && imageModal.classList.contains('active')) {
-                imageModal.classList.remove('active');
-            }
-        });
-
-        // Animation on scroll
+        // ==================== INTERSECTION OBSERVER ====================
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 1s ease-out';
+                    // Letter Section
+                    if (entry.target.id === 'letterContainer') {
+                        entry.target.classList.add('visible');
+                        if (!typingStarted) {
+                            typingStarted = true;
+                            setTimeout(typeText, 500);
+                            // Bắt đầu phát âm typing khi bắt đầu gõ
+                            if (typingAudio) {
+                                typingAudio.play().catch(() => {});
+                            }
+                        } else if (!typingFinished) {
+                            // Nếu đang gõ và vào lại viewport, tiếp tục phát âm
+                            if (typingAudio && typingAudio.paused) {
+                                typingAudio.play().catch(() => {});
+                            }
+                        }
+                    }
+                    // Timeline Title
+                    if (entry.target.id === 'timelineTitle') {
+                        entry.target.classList.add('visible');
+                        // Animate timeline line
+                        setTimeout(() => {
+                            document.getElementById('timelineLine').classList.add('animate');
+                        }, 300);
+                    }
+                    // Timeline Items
+                    if (entry.target.classList.contains('timeline-item')) {
+                        entry.target.classList.add('visible');
+                    }
+                    // Gallery Title
+                    if (entry.target.id === 'galleryTitle') {
+                        entry.target.classList.add('visible');
+                    }
+                    // Polaroid Items
+                    if (entry.target.classList.contains('polaroid')) {
+                        entry.target.classList.add('visible');
+                        const rotation = entry.target.getAttribute('data-rotation');
+                        entry.target.style.setProperty('--rotation', rotation + 'deg');
+                    }
+                } else {
+                    // Khi rời khỏi viewport
+                    if (entry.target.id === 'letterContainer') {
+                        // Tạm dừng âm typing nếu rời khỏi vùng thư
+                        if (typingAudio && !typingAudio.paused) {
+                            typingAudio.pause();
+                        }
+                    }
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.timeline-item, .gallery-item').forEach(el => {
-            observer.observe(el);
+        // Observe elements
+        const letterContainer = document.getElementById('letterContainer');
+        const timelineTitle = document.getElementById('timelineTitle');
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const galleryTitle = document.getElementById('galleryTitle');
+        const polaroids = document.querySelectorAll('.polaroid');
+
+        observer.observe(letterContainer);
+        observer.observe(timelineTitle);
+        timelineItems.forEach(item => observer.observe(item));
+        observer.observe(galleryTitle);
+        polaroids.forEach(polaroid => observer.observe(polaroid));
+
+        // Staggered animation for polaroids
+        polaroids.forEach((polaroid, index) => {
+            polaroid.style.animationDelay = `${index * 0.1}s`;
         });
 
-        // Thêm hiệu ứng khi scroll
-        let lastScroll = 0;
+        // ==================== PARALLAX EFFECT ====================
         window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            if (currentScroll > lastScroll && currentScroll > 100) {
-                document.querySelector('.music-control').style.transform = 'translateY(0)';
-            }
-            lastScroll = currentScroll;
+            const scrolled = window.pageYOffset;
+            const parallaxLayers = document.querySelectorAll('.parallax-layer');
+            
+            parallaxLayers.forEach((layer, index) => {
+                const speed = (index + 1) * 0.3;
+                layer.style.transform = `translateY(${scrolled * speed}px)`;
+            });
         });
 
-        // Lưu ý về nhạc nền
-        // Để thêm nhạc nền thực tế, hãy:
-        // 1. Đặt file nhạc vào thư mục (ví dụ: music/teachers-day.mp3)
-        // 2. Thay đổi đường dẫn trong thẻ <audio>: <source src="music/teachers-day.mp3" type="audio/mpeg">
-        // Hoặc sử dụng URL nhạc công khai trên internet
+        // ==================== CONFETTI EFFECT ====================
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confettiContainer');
+            const colors = ['#FFB6C1', '#DDA0DD', '#FFE4B5', '#B0E0E6', '#FFD700', '#FF7F50'];
+            const confettiCount = 200;
+
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = (Math.random() * 12 + 8) + 'px';
+                    confetti.style.height = (Math.random() * 12 + 8) + 'px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
+                    confetti.style.setProperty('--drift', (Math.random() * 200 - 100) + 'px');
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confettiContainer.appendChild(confetti);
+
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 10);
+            }
+        }
+
+        const ctaButton = document.getElementById('ctaButton');
+        ctaButton.addEventListener('click', () => {
+            createConfetti();
+            // Scroll to top với hiệu ứng
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // ==================== POLAROID ROTATION SETUP ====================
+        polaroids.forEach(polaroid => {
+            const rotation = polaroid.getAttribute('data-rotation');
+            polaroid.style.setProperty('--rotation', rotation + 'deg');
+        });
     </script>
 </body>
 </html>
-
