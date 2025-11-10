@@ -654,6 +654,163 @@
             }
         }
 
+        /* ==================== FALLING IMAGES EFFECT ==================== */
+        .falling-images-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 5000;
+        }
+
+        .falling-image {
+            position: absolute;
+            top: -150px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center center;
+                opacity: 0;
+            animation: fallDown linear forwards;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            /* Đảm bảo chất lượng hình ảnh cao */
+            image-rendering: auto;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            /* Đảm bảo hình tròn hoàn hảo */
+            aspect-ratio: 1;
+            overflow: hidden;
+            /* Tối ưu hiệu suất */
+            will-change: transform, opacity;
+            /* Cho phép click vào hình ảnh */
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .falling-image:hover {
+            filter: brightness(1.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            z-index: 5001;
+        }
+
+        @keyframes fallDown {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.9;
+            }
+            95% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(calc(100vh + 150px)) rotate(var(--rotation, 360deg));
+                opacity: 0;
+            }
+        }
+
+        /* ==================== IMAGE LIGHTBOX/OVERLAY ==================== */
+        .image-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+                opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+            }
+
+        .image-lightbox.active {
+            display: flex;
+                opacity: 1;
+        }
+
+        .image-lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: lightboxZoomIn 0.3s ease;
+        }
+
+        @keyframes lightboxZoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .image-lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            object-fit: contain;
+            /* Hiển thị hình ảnh gốc, không cắt thành hình tròn */
+            /* Reset các style từ falling-image */
+            border-radius: 10px !important;
+            aspect-ratio: auto !important;
+            /* Đảm bảo chất lượng cao nhất */
+            image-rendering: auto;
+            /* Đảm bảo hình ảnh không bị méo */
+            object-position: center center;
+            /* Tối ưu hiệu suất */
+            will-change: auto;
+            cursor: default;
+            pointer-events: auto;
+        }
+
+        .image-lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            z-index: 10001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .image-lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .image-lightbox-close::before {
+            content: '×';
+            font-size: 3rem;
+            line-height: 1;
+        }
+
         /* ==================== FOOTER ==================== */
         .footer {
             padding: 60px 2rem;
@@ -771,6 +928,24 @@
 
             .music-label {
                 display: none;
+            }
+
+            /* Lightbox responsive */
+            .image-lightbox-content {
+                max-width: 95vw;
+                max-height: 85vh;
+            }
+
+            .image-lightbox img {
+                max-height: 85vh;
+            }
+
+            .image-lightbox-close {
+                top: 10px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 2rem;
             }
         }
 
@@ -929,11 +1104,22 @@
     <!-- Confetti Container -->
     <div class="confetti-container" id="confettiContainer"></div>
 
+    <!-- Falling Images Container -->
+    <div class="falling-images-container" id="fallingImagesContainer"></div>
+
+    <!-- Image Lightbox/Overlay -->
+    <div class="image-lightbox" id="imageLightbox">
+        <div class="image-lightbox-close" id="lightboxClose"></div>
+        <div class="image-lightbox-content">
+            <img id="lightboxImage" src="" alt="Enlarged image">
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <p>Trân trọng gửi đến Thầy/Cô</p>
         <p class="signature">Tạo bởi nhóm em niêm khoá 2017 - 2020 (2002) với tất cả lòng biết ơn</p>
-        <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">© 2024 nhamngo.29 - Món quà nhỏ nhân Ngày Nhà Giáo Việt Nam 20/11</p>
+        <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">© 2025 nhamngo.29 - Món quà nhỏ nhân Ngày Nhà Giáo Việt Nam 20/11</p>
     </footer>
 
     <script>
@@ -1031,6 +1217,8 @@
                 // Kích hoạt particle animation
                 initParticles();
                 createConfetti();
+                // Bắt đầu hiệu ứng hình ảnh rơi
+                startFallingImagesEffect();
             }, 2000);
         });
 
@@ -1242,6 +1430,235 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
                 const speed = (index + 1) * 0.3;
                 layer.style.transform = `translateY(${scrolled * speed}px)`;
             });
+        });
+
+        // ==================== FALLING IMAGES EFFECT ====================
+        const fallingImagesContainer = document.getElementById('fallingImagesContainer');
+        const imageResources = [
+            'Công.jpeg', 'Độ.png', 'Dũng.jpeg', 'Hoàng.jpeg', 'Linh.jpeg', 'Minh Trung.jpeg',
+            'Minh.png', 'Nam.jpeg', 'Nguyên.png', 'Nhẫn.jpeg', 'Nhung.jpeg', 'Quý.jpeg',
+            'Thơm.jpeg', 'toàn.jpeg', 'trang.jpeg', 'Trường.jpeg', 'Yến.jpeg'
+        ];
+
+        let fallingImagesInterval = null;
+        let interactionCount = 0;
+        const INTERACTION_THRESHOLD = 5;
+        const TRIGGER_PROBABILITY = 0.15; // 15% chance
+
+        function createFallingImage() {
+            if (!fallingImagesContainer) return;
+
+            // Chọn ngẫu nhiên một hình ảnh
+            const randomIndex = Math.floor(Math.random() * imageResources.length);
+            const imageSrc = imageResources[randomIndex];
+
+            // Tạo element img
+            const img = document.createElement('img');
+            img.src = imageSrc;
+            img.alt = 'Falling image';
+            img.className = 'falling-image';
+
+            // Ngẫu nhiên hóa vị trí xuất phát ngang (tránh mép màn hình)
+            const maxLeft = window.innerWidth - 100;
+            const startLeft = Math.random() * Math.max(maxLeft, 50);
+            img.style.left = `${startLeft}px`;
+
+            // Ngẫu nhiên hóa kích thước (60px - 100px) - Đảm bảo hình tròn hoàn hảo
+            const size = 60 + Math.random() * 40;
+            img.style.width = `${size}px`;
+            img.style.height = `${size}px`;
+            // Đảm bảo aspect-ratio = 1 để hình tròn hoàn hảo
+            img.style.aspectRatio = '1';
+
+            // Ngẫu nhiên hóa tốc độ rơi (5-10 giây)
+            const duration = 5 + Math.random() * 5;
+            img.style.animationDuration = `${duration}s`;
+
+            // Ngẫu nhiên hóa độ trễ (0-1 giây) để tạo hiệu ứng phân tán
+            const delay = Math.random() * 1;
+            img.style.animationDelay = `${delay}s`;
+
+            // Ngẫu nhiên hóa góc xoay (1-3 vòng, có thể theo chiều kim đồng hồ hoặc ngược)
+            const rotationDirection = Math.random() > 0.5 ? 1 : -1;
+            const rotationAmount = (1 + Math.random() * 2) * 360 * rotationDirection;
+            img.style.setProperty('--rotation', `${rotationAmount}deg`);
+
+            // Lưu đường dẫn hình ảnh gốc vào data attribute để sử dụng khi phóng to
+            img.setAttribute('data-original-src', imageSrc);
+
+            // Thêm vào container
+            fallingImagesContainer.appendChild(img);
+
+            // Thêm event listener để mở lightbox khi click
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openImageLightbox(imageSrc);
+            });
+
+            // Xóa hình ảnh sau khi animation kết thúc
+            img.addEventListener('animationend', () => {
+                if (img.parentNode) {
+                    img.remove();
+                }
+            });
+
+            // Xử lý lỗi nếu hình ảnh không tải được
+            img.addEventListener('error', () => {
+                if (img.parentNode) {
+                    img.remove();
+                }
+            });
+        }
+
+        function triggerFallingImages() {
+            // Số lượng hình ảnh rơi: 1-3
+            const numImages = Math.floor(Math.random() * 3) + 1;
+            
+            for (let i = 0; i < numImages; i++) {
+                // Thêm độ trễ nhỏ giữa các hình ảnh trong cùng một lần kích hoạt
+                setTimeout(() => {
+                    createFallingImage();
+                }, i * 200);
+            }
+        }
+
+        function handleUserInteraction() {
+            interactionCount++;
+            
+            // Kiểm tra sau mỗi INTERACTION_THRESHOLD tương tác
+            if (interactionCount >= INTERACTION_THRESHOLD) {
+                // Xác suất kích hoạt: TRIGGER_PROBABILITY (15%)
+                if (Math.random() < TRIGGER_PROBABILITY) {
+                    triggerFallingImages();
+                }
+                interactionCount = 0; // Reset counter
+            }
+        }
+
+        function startFallingImagesEffect() {
+            // Tránh tạo nhiều interval
+            if (fallingImagesInterval) {
+                return;
+            }
+
+            // Kích hoạt dựa trên tương tác người dùng
+            document.addEventListener('click', handleUserInteraction);
+            document.addEventListener('scroll', handleUserInteraction, { passive: true });
+            document.addEventListener('keydown', handleUserInteraction);
+
+            // Kích hoạt định kỳ với xác suất thấp (mỗi 8-12 giây)
+            fallingImagesInterval = setInterval(() => {
+                if (Math.random() < TRIGGER_PROBABILITY) {
+                    triggerFallingImages();
+                }
+            }, 8000 + Math.random() * 4000); // 8-12 giây
+
+            // Kích hoạt lần đầu sau 3 giây (với xác suất 30%) để người dùng thấy hiệu ứng sớm
+            setTimeout(() => {
+                if (Math.random() < 0.3) {
+                    triggerFallingImages();
+                }
+            }, 3000);
+        }
+
+        function stopFallingImagesEffect() {
+            if (fallingImagesInterval) {
+                clearInterval(fallingImagesInterval);
+                fallingImagesInterval = null;
+            }
+            document.removeEventListener('click', handleUserInteraction);
+            document.removeEventListener('scroll', handleUserInteraction);
+            document.removeEventListener('keydown', handleUserInteraction);
+        }
+
+        // ==================== IMAGE LIGHTBOX FUNCTIONALITY ====================
+        const imageLightbox = document.getElementById('imageLightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+        let isLightboxOpening = false;
+
+        function openImageLightbox(imageSrc) {
+            if (!imageLightbox || !lightboxImage) return;
+
+            // Đặt đường dẫn hình ảnh gốc (chất lượng cao)
+            lightboxImage.src = imageSrc;
+            lightboxImage.alt = 'Enlarged image';
+
+            // Hiển thị lightbox
+            imageLightbox.classList.add('active');
+            isLightboxOpening = true;
+            setTimeout(() => {
+                isLightboxOpening = false;
+            }, 250);
+            
+            // Ngăn scroll khi lightbox mở
+            document.body.style.overflow = 'hidden';
+
+            // Xử lý khi hình ảnh tải xong
+            lightboxImage.onload = function() {
+                // Đảm bảo hình ảnh được tải với chất lượng cao
+                this.style.imageRendering = 'auto';
+            };
+
+            // Xử lý lỗi nếu hình ảnh không tải được
+            lightboxImage.onerror = function() {
+                console.error('Không thể tải hình ảnh:', imageSrc);
+                closeImageLightbox();
+            };
+        }
+
+        function closeImageLightbox() {
+            if (!imageLightbox) return;
+
+            // Ẩn lightbox
+            imageLightbox.classList.remove('active');
+            
+            // Khôi phục scroll
+            document.body.style.overflow = '';
+
+            // Xóa đường dẫn hình ảnh sau khi animation kết thúc
+            setTimeout(() => {
+                if (lightboxImage) {
+                    lightboxImage.src = '';
+                }
+            }, 300);
+        }
+
+        // Đóng lightbox khi click vào nút close
+        if (lightboxClose) {
+            lightboxClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeImageLightbox();
+            });
+        }
+
+        // Đóng lightbox khi click vào overlay (background)
+        if (imageLightbox) {
+            imageLightbox.addEventListener('click', (e) => {
+                // Chỉ đóng nếu click vào chính overlay (background), không phải vào content hoặc hình ảnh
+                if (isLightboxOpening) {
+                    return;
+                }
+                if (e.target === imageLightbox) {
+                    closeImageLightbox();
+                }
+            });
+
+            // Ngăn đóng lightbox khi click vào content hoặc hình ảnh
+            const lightboxContent = imageLightbox.querySelector('.image-lightbox-content');
+            if (lightboxContent) {
+                lightboxContent.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+        }
+
+        // Đóng lightbox khi nhấn phím ESC
+        document.addEventListener('keydown', function lightboxEscapeHandler(e) {
+            if (e.key === 'Escape' && imageLightbox && imageLightbox.classList.contains('active')) {
+                e.stopPropagation(); // Ngăn event lan truyền
+                closeImageLightbox();
+            }
         });
 
         // ==================== CONFETTI EFFECT ====================
