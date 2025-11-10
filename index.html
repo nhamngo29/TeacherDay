@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Món quà nhỏ gửi Thầy/Cô 20/11</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-pink: #FFB6C1;
+            --color-purple: #DDA0DD;
+            --color-yellow: #FFE4B5;
+            --color-blue: #B0E0E6;
+            --color-white: #FFFFFF;
+            --color-dark: #4A4A4A;
+            --color-light: #F8F8F8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--color-dark);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #FFE4E1 0%, #F0E6FF 50%, #E6F3FF 100%);
+            background-attachment: fixed;
+        }
+
+        /* Splash Screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-pink) 0%, var(--color-purple) 50%, var(--color-blue) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 1s ease-out, visibility 1s;
+        }
+
+        .splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .splash-content {
+            text-align: center;
+            color: white;
+        }
+
+        .splash-content h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .splash-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .start-btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            background: white;
+            color: var(--color-purple);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Floating Background Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Music Control */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .music-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .music-label {
+            font-size: 0.9rem;
+            color: var(--color-dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            animation: fadeIn 1.5s ease-out;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: var(--color-purple);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--color-dark);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .open-card-btn {
+            padding: 18px 50px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--color-pink), var(--color-purple));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .open-card-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Letter Section */
+        .letter-section {
+            padding: 80px 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .letter-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 60px 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .letter-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="paper" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="0.5" fill="%23f0f0f0" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23paper)"/></svg>');
+            border-radius: 20px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .letter-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .letter-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--color-purple);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .letter-text {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: var(--color-dark);
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .letter-signature {
+            text-align: right;
+            margin-top: 3rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: var(--color-purple);
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 80px 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            text-align: center;
+            color: var(--color-purple);
+            margin-bottom: 3rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--color-pink), var(--color-purple), var(--color-blue));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+            animation: fadeInRight 1s ease-out;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            width: 45%;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: auto;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--color-pink), var(--color-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 3;
+        }
+
+        .timeline-item h3 {
+            font-size: 1.5rem;
+            color: var(--color-purple);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            color: var(--color-dark);
+            line-height: 1.6;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 80px 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 10001;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 2rem;
+            text-align: center;
+            color: var(--color-dark);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: var(--color-purple);
+            margin-top: 1rem;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--color-pink);
+            position: absolute;
+            animation: confettiFall linear;
+            z-index: 1000;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .letter-container {
+                padding: 40px 30px;
+            }
+
+            .letter-title {
+                font-size: 2rem;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+                padding-left: 70px;
+            }
+
+            .timeline-content {
+                width: 100%;
+                margin: 0 !important;
+            }
+
+            .timeline-icon {
+                left: 30px;
+                transform: translateX(-50%);
+            }
+
+            .music-control {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+            }
+
+            .music-label {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .splash-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .letter-container {
+                padding: 30px 20px;
+            }
+
+            .letter-text {
+                font-size: 1rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <h1>💐 Chúc Mừng 20/11 💐</h1>
+            <p>Món quà nhỏ gửi Thầy/Cô kính mến</p>
+            <button class="start-btn" id="startBtn">Bắt đầu trải nghiệm</button>
+        </div>
+    </div>
+
+    <!-- Floating Background Elements -->
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <!-- Music Control -->
+    <div class="music-control">
+        <button class="music-btn" id="musicBtn">▶️</button>
+        <span class="music-label">Nhạc nền</span>
+        <audio id="backgroundMusic" loop>
+            <!-- Thay thế bằng đường dẫn nhạc thực tế -->
+            <source src="" type="audio/mpeg">
+            <!-- Fallback: Sử dụng nhạc từ URL công khai hoặc tạo silent audio -->
+        </audio>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Chúc Mừng Ngày Nhà Giáo Việt Nam</h1>
+            <p class="subtitle">20 tháng 11</p>
+            <p class="subtitle" style="font-size: 1.2rem; margin-top: 1rem;">Con/Em có món quà nhỏ gửi Thầy/Cô...</p>
+            <button class="open-card-btn" id="openCardBtn">Mở Thiệp 💌</button>
+        </div>
+    </section>
+
+    <!-- Letter Section -->
+    <section class="letter-section" id="letterSection">
+        <div class="letter-container">
+            <div class="letter-content">
+                <h2 class="letter-title">Gửi Thầy/Cô kính mến!</h2>
+                <div class="letter-text">
+                    <p>Kính gửi Thầy/Cô,</p>
+                    <p>Nhân dịp Ngày Nhà Giáo Việt Nam 20/11, con/em xin gửi đến Thầy/Cô những lời chúc tốt đẹp nhất, những lời tri ân sâu sắc nhất từ tận đáy lòng.</p>
+                    <p>Thầy/Cô đã dành cho chúng con/em không chỉ là những bài giảng hay, mà còn là tình yêu thương, sự quan tâm, và những bài học quý giá về cuộc sống. Mỗi lời giảng, mỗi cử chỉ của Thầy/Cô đều in sâu trong tâm trí con/em, trở thành hành trang theo con/em suốt cuộc đời.</p>
+                    <p>Những ngày tháng được học tập dưới sự dìu dắt của Thầy/Cô là những khoảnh khắc đáng quý nhất. Thầy/Cô không chỉ là người truyền đạt kiến thức, mà còn là người thắp sáng ước mơ, khơi gợi đam mê và định hướng tương lai cho chúng con/em.</p>
+                    <p>Con/em biết rằng, công việc giảng dạy không phải là điều dễ dàng. Nó đòi hỏi sự kiên nhẫn, tâm huyết và tình yêu thương vô bờ bến. Thầy/Cô đã dành cả cuộc đời để chăm sóc, nuôi dưỡng những thế hệ học trò, để chúng con/em có thể vững bước trên con đường tri thức.</p>
+                    <p>Hôm nay, con/em muốn nói lời cảm ơn chân thành nhất đến Thầy/Cô. Cảm ơn Thầy/Cô đã luôn kiên nhẫn, cảm ơn Thầy/Cô đã luôn tin tưởng, và cảm ơn Thầy/Cô đã luôn yêu thương chúng con/em như những đứa con của mình.</p>
+                    <p>Con/em mong rằng Thầy/Cô sẽ luôn khỏe mạnh, hạnh phúc và tiếp tục truyền cảm hứng cho nhiều thế hệ học trò khác. Những công lao của Thầy/Cô sẽ mãi mãi được ghi nhớ và trân trọng.</p>
+                    <p>Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui và hạnh phúc!</p>
+                </div>
+                <div class="letter-signature">
+                    <p>Với lòng biết ơn sâu sắc,</p>
+                    <p style="margin-top: 1rem;">Từ học trò của Thầy/Cô</p>
+                    <p style="margin-top: 0.5rem; font-size: 1.2rem;">– [Tên của bạn] –</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <h2 class="section-title">Những Kỷ Niệm Đáng Nhớ</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-icon">🎓</div>
+                <div class="timeline-content">
+                    <h3>Ngày Đầu Bỡ Ngỡ</h3>
+                    <p>Nhớ lại ngày đầu tiên bước vào lớp, được Thầy/Cô đón chào với nụ cười ấm áp. Những lo lắng, bỡ ngỡ ban đầu đã tan biến nhờ sự quan tâm của Thầy/Cô.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">📚</div>
+                <div class="timeline-content">
+                    <h3>Những Bài Giảng Tâm Đắc</h3>
+                    <p>Mỗi bài giảng của Thầy/Cô không chỉ là kiến thức mà còn là những câu chuyện, những bài học cuộc sống quý giá. Những giờ học ấy luôn đầy ắp tiếng cười và sự say mê.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">🌸</div>
+                <div class="timeline-content">
+                    <h3>Những Khoảnh Khắc Vui Vẻ</h3>
+                    <p>Những lúc cả lớp cùng nhau thảo luận, những buổi ngoại khóa đầy ý nghĩa, hay những lần Thầy/Cô chia sẻ câu chuyện cá nhân. Tất cả đều là những kỷ niệm đẹp không thể quên.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">💝</div>
+                <div class="timeline-content">
+                    <h3>Tình Cảm Thầy Trò</h3>
+                    <p>Tình cảm mà Thầy/Cô dành cho chúng con/em không chỉ dừng lại ở lớp học. Đó là sự quan tâm, động viên trong mọi hoàn cảnh, là tình yêu thương chân thành và vô điều kiện.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <h2 class="section-title">Những Khoảnh Khắc Đáng Nhớ</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item" data-image="1">
+                <img src="https://via.placeholder.com/300x200/FFB6C1/FFFFFF?text=Kỷ+niệm+lớp+1" alt="Kỷ niệm">
+            </div>
+            <div class="gallery-item" data-image="2">
+                <img src="https://via.placeholder.com/300x200/DDA0DD/FFFFFF?text=Kỷ+niệm+lớp+2" alt="Kỷ niệm">
+            </div>
+            <div class="gallery-item" data-image="3">
+                <img src="https://via.placeholder.com/300x200/FFE4B5/FFFFFF?text=Kỷ+niệm+lớp+3" alt="Kỷ niệm">
+            </div>
+            <div class="gallery-item" data-image="4">
+                <img src="https://via.placeholder.com/300x200/B0E0E6/FFFFFF?text=Kỷ+niệm+lớp+4" alt="Kỷ niệm">
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="imageModal">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Kỷ niệm">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Trân trọng gửi đến Thầy/Cô</p>
+        <p class="signature">Tạo bởi [Tên của bạn] với tất cả lòng biết ơn</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">© 2024 - Món quà nhỏ nhân Ngày Nhà Giáo Việt Nam 20/11</p>
+    </footer>
+
+    <script>
+        // Splash Screen
+        const splashScreen = document.getElementById('splashScreen');
+        const startBtn = document.getElementById('startBtn');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const openCardBtn = document.getElementById('openCardBtn');
+        const letterSection = document.getElementById('letterSection');
+        const floatingElements = document.getElementById('floatingElements');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalClose = document.getElementById('modalClose');
+
+        // Tạo floating icons
+        const icons = ['🌸', '💐', '🌺', '🌻', '🌷', '🌹', '⭐', '✨'];
+        for (let i = 0; i < 15; i++) {
+            const icon = document.createElement('div');
+            icon.className = 'floating-icon';
+            icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+            icon.style.left = Math.random() * 100 + '%';
+            icon.style.top = Math.random() * 100 + '%';
+            icon.style.animationDelay = Math.random() * 6 + 's';
+            icon.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            floatingElements.appendChild(icon);
+        }
+
+        // Start Button - Bắt đầu trải nghiệm
+        startBtn.addEventListener('click', () => {
+            splashScreen.classList.add('hidden');
+            // Bật nhạc
+            setTimeout(() => {
+                try {
+                    backgroundMusic.play().catch(e => {
+                        console.log('Autoplay bị chặn. Người dùng cần tương tác để phát nhạc.');
+                    });
+                } catch (e) {
+                    console.log('Lỗi phát nhạc:', e);
+                }
+            }, 500);
+        });
+
+        // Music Control
+        let isPlaying = false;
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                backgroundMusic.pause();
+                musicBtn.textContent = '▶️';
+                isPlaying = false;
+            } else {
+                backgroundMusic.play().then(() => {
+                    musicBtn.textContent = '⏸️';
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log('Lỗi phát nhạc:', e);
+                    alert('Vui lòng tương tác với trang để phát nhạc.');
+                });
+            }
+        });
+
+        // Open Card Button - Scroll mượt và tạo confetti
+        openCardBtn.addEventListener('click', () => {
+            letterSection.scrollIntoView({ behavior: 'smooth' });
+            createConfetti();
+        });
+
+        // Tạo hiệu ứng confetti
+        function createConfetti() {
+            const colors = ['#FFB6C1', '#DDA0DD', '#FFE4B5', '#B0E0E6', '#FFD700'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 20);
+            }
+        }
+
+        // Gallery Modal
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                modalImage.src = imgSrc;
+                imageModal.classList.add('active');
+            });
+        });
+
+        modalClose.addEventListener('click', () => {
+            imageModal.classList.remove('active');
+        });
+
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                imageModal.classList.remove('active');
+            }
+        });
+
+        // Keyboard navigation for modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && imageModal.classList.contains('active')) {
+                imageModal.classList.remove('active');
+            }
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 1s ease-out';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item, .gallery-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Thêm hiệu ứng khi scroll
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                document.querySelector('.music-control').style.transform = 'translateY(0)';
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Lưu ý về nhạc nền
+        // Để thêm nhạc nền thực tế, hãy:
+        // 1. Đặt file nhạc vào thư mục (ví dụ: music/teachers-day.mp3)
+        // 2. Thay đổi đường dẫn trong thẻ <audio>: <source src="music/teachers-day.mp3" type="audio/mpeg">
+        // Hoặc sử dụng URL nhạc công khai trên internet
+    </script>
+</body>
+</html>
+
