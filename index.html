@@ -1159,27 +1159,27 @@
         <h2 class="section-title" id="galleryTitle">Những Khoảnh Khắc Đáng Nhớ</h2>
         <div class="gallery-container" id="galleryContainer">
             <div class="polaroid" data-rotation="-5">
-                <img src="/Teacher/Cô Hoà.png" alt="Kỷ niệm 1" loading="lazy">
+                <img src="Teacher/Cô Hoà.png" alt="Kỷ niệm 1" loading="lazy">
                 <div class="polaroid-caption">Ngày đầu tiên</div>
             </div>
             <div class="polaroid" data-rotation="8">
-                <img src="/Teacher/Cô Hảo.png" alt="Kỷ niệm 2" loading="lazy">
+                <img src="Teacher/Cô Hảo.png" alt="Kỷ niệm 2" loading="lazy">
                 <div class="polaroid-caption">Giờ học đầy cảm hứng</div>
             </div>
             <div class="polaroid" data-rotation="-7">
-                <img src="/Teacher/Thầy Lĩnh.JPEG" alt="Kỷ niệm 3" loading="lazy">
+                <img src="Teacher/Thầy Lĩnh.JPEG" alt="Kỷ niệm 3" loading="lazy">
                 <div class="polaroid-caption">Buổi ngoại khóa</div>
             </div>
             <div class="polaroid" data-rotation="6">
-                <img src="/Teacher/Lớp.JPEG" alt="Kỷ niệm 4" loading="lazy">
+                <img src="Teacher/Lớp.JPEG" alt="Kỷ niệm 4" loading="lazy">
                 <div class="polaroid-caption">Những cuốn sách yêu thương</div>
             </div>
             <div class="polaroid" data-rotation="-4">
-                <img src="/Teacher/Thầy Lĩnh 2.jpeg" alt="Kỷ niệm 5" loading="lazy">
+                <img src="Teacher/Thầy Lĩnh 2.jpeg" alt="Kỷ niệm 5" loading="lazy">
                 <div class="polaroid-caption">Khoảnh khắc vui vẻ</div>
             </div>
             <div class="polaroid" data-rotation="9">
-                <img src="/Teacher/Cô Hoà.JPEG" alt="Kỷ niệm 6" loading="lazy">
+                <img src="Teacher/Cô Hoà.JPEG" alt="Kỷ niệm 6" loading="lazy">
                 <div class="polaroid-caption">Tình cảm thầy trò</div>
             </div>
         </div>
@@ -1534,6 +1534,7 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
             'Image_Student/Author.png',
             'Image_Student/Công.jpeg',
             'Image_Student/Dũng.jpeg',
+            'Image_Student/Hoa.png',
             'Image_Student/Hoài.jpeg',
             'Image_Student/Hoàn.png',
             'Image_Student/Hoàng Anh.png',
@@ -1541,6 +1542,7 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
             'Image_Student/Hà.jpeg',
             'Image_Student/Hằng.png',
             'Image_Student/Khánh.png',
+            'Image_Student/Kiên.png',
             'Image_Student/Linh.jpeg',
             'Image_Student/Liên.png',
             'Image_Student/Ly.jpeg',
@@ -1550,6 +1552,7 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
             'Image_Student/Minh.png',
             'Image_Student/Nam.jpeg',
             'Image_Student/Nguyên.png',
+            'Image_Student/Nguyễn Tuyền.png',
             'Image_Student/Ngọ.png',
             'Image_Student/Nhung.jpeg',
             'Image_Student/Như Quỳnh.JPEG',
@@ -1640,7 +1643,9 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
 
             // Thêm event listener để mở lightbox khi click
             wrapper.addEventListener('click', (e) => {
+                e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation();
                 openImageLightbox(imageIndex);
             });
 
@@ -1727,8 +1732,8 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
         const lightboxPrev = document.getElementById('lightboxPrev');
         const lightboxNext = document.getElementById('lightboxNext');
         const lightboxCaption = document.getElementById('lightboxCaption');
-        let ignoreNextLightboxClick = false;
         let currentImageIndex = null;
+        let lastOpenTime = 0; // Thời gian lần cuối mở lightbox
 
         function getImageNameFromSrc(src) {
             return src.replace(/^.*[\\/]/, '').replace(/\.[^/.]+$/, '');
@@ -1737,6 +1742,9 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
         function openImageLightbox(index) {
             if (!imageLightbox || !lightboxImage) return;
             if (typeof index !== 'number' || index < 0 || index >= imageResources.length) return;
+
+            // Lưu thời gian mở lightbox
+            lastOpenTime = Date.now();
 
             currentImageIndex = index;
             const imageSrc = imageResources[index];
@@ -1751,10 +1759,6 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
 
             if (!wasActive) {
                 imageLightbox.classList.add('active');
-                ignoreNextLightboxClick = true;
-                setTimeout(() => {
-                    ignoreNextLightboxClick = false;
-                }, 400);
                 document.body.style.overflow = 'hidden';
             }
 
@@ -1774,7 +1778,6 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
             // Ẩn lightbox
             imageLightbox.classList.remove('active');
             currentImageIndex = null;
-            ignoreNextLightboxClick = false;
 
             // Khôi phục scroll
             document.body.style.overflow = '';
@@ -1801,20 +1804,29 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
         // Đóng lightbox khi click vào overlay (background)
         if (imageLightbox) {
             imageLightbox.addEventListener('click', (e) => {
-                if (ignoreNextLightboxClick) {
-                    ignoreNextLightboxClick = false;
+                // Kiểm tra thời gian - nếu vừa mở (trong vòng 600ms) thì không đóng
+                const timeSinceOpen = Date.now() - lastOpenTime;
+                if (timeSinceOpen < 600) {
                     return;
                 }
-                // Chỉ đóng nếu click vào chính overlay (background)
+                
+                // Chỉ đóng nếu click vào chính overlay (background), không phải các element con
                 if (e.target === imageLightbox) {
                     closeImageLightbox();
                 }
-            });
+            }, true); // Sử dụng capture phase
 
             // Ngăn đóng lightbox khi click vào content hoặc hình ảnh
             const lightboxContent = imageLightbox.querySelector('.image-lightbox-content');
             if (lightboxContent) {
                 lightboxContent.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Ngăn đóng khi click vào hình ảnh
+            if (lightboxImage) {
+                lightboxImage.addEventListener('click', (e) => {
                     e.stopPropagation();
                 });
             }
