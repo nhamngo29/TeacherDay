@@ -1159,7 +1159,7 @@
         <h2 class="section-title" id="galleryTitle">Những Khoảnh Khắc Đáng Nhớ</h2>
         <div class="gallery-container" id="galleryContainer">
             <div class="polaroid" data-rotation="-5">
-                <img src="Teacher/Cô Hoà.png" alt="Kỷ niệm 1" loading="lazy">
+                <img src="Image_Student/Ly 2.png" alt="Kỷ niệm 1" loading="lazy">
                 <div class="polaroid-caption">Ngày đầu tiên</div>
             </div>
             <div class="polaroid" data-rotation="8">
@@ -1645,9 +1645,8 @@ Chúc Thầy/Cô một Ngày Nhà Giáo thật ý nghĩa, đầy ắp niềm vui
             wrapper.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                e.stopImmediatePropagation();
                 openImageLightbox(imageIndex);
-            });
+            }, true); 
 
             // Xóa hình ảnh sau khi animation kết thúc
             wrapper.addEventListener('animationend', () => {
